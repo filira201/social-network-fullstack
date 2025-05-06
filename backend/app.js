@@ -4,6 +4,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const fs = require("fs");
+require("dotenv").config();
 
 const app = express();
 
@@ -36,10 +37,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
-});
-
-app.listen(() => {
-  console.log("Сервер запщуен");
 });
 
 module.exports = app;
