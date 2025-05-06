@@ -14,6 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+//http://localhost:{port}/api/{rout}
+app.use("/api", require("./routes"));
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -28,6 +31,10 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+});
+
+app.listen(() => {
+  console.log("Сервер запщуен");
 });
 
 module.exports = app;
