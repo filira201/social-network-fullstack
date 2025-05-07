@@ -5,6 +5,7 @@ const {
   UserController,
   PostController,
   CommentController,
+  LikeController,
 } = require("../controllers");
 const authenticateToken = require("../middleware/auth");
 
@@ -35,6 +36,14 @@ router.delete("/posts/:id", authenticateToken, PostController.deletePost);
 
 //Роуты для комментариев
 router.post("/comments", authenticateToken, CommentController.createComment);
-router.delete("/comments/:id", authenticateToken, CommentController.deleteComment);
+router.delete(
+  "/comments/:id",
+  authenticateToken,
+  CommentController.deleteComment
+);
+
+//Роту для лайков
+router.post("/likes", authenticateToken, LikeController.likePost);
+router.delete("/likes/:id", authenticateToken, LikeController.unlikePost);
 
 module.exports = router;
