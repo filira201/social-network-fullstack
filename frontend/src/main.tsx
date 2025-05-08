@@ -5,12 +5,15 @@ import App from "./App.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store.ts";
 import { HeroUIProvider } from "@heroui/react";
+import { ThemeConextProvider } from "./contexts/theme/provider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <HeroUIProvider>
-        <App />
+        <ThemeConextProvider>
+          <App />
+        </ThemeConextProvider>
       </HeroUIProvider>
     </Provider>
   </StrictMode>
