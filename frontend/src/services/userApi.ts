@@ -1,4 +1,4 @@
-import type { User } from "../lib/models";
+import type { User } from "../lib";
 import { api } from "./api";
 
 export const userApi = api.injectEndpoints({
