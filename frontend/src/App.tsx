@@ -6,7 +6,7 @@ const App = () => {
   //TODO: МБ добавить Toaster из "sonner" сюда или в AppLayout
   const routes = useMemo(() => routerBuilder(), []);
   return (
-    <div className="main-wrapper bg-white text-black dark:bg-black dark:text-white">
+    <div className="main-wrapper">
       <RouterProvider router={createBrowserRouter(routes)} />
     </div>
   );

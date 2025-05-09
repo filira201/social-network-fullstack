@@ -7,7 +7,7 @@ const Header = () => {
   const { darkMode, toggleTheme } = useGetTheme();
 
   return (
-    <Navbar className="bg-white text-black dark:bg-black dark:text-white">
+    <Navbar>
       <NavbarBrand>
         <p className="font-bold text-inherit">Social Network</p>
       </NavbarBrand>

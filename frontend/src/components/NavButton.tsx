@@ -10,10 +10,7 @@ interface NavButtonProps {
 
 const NavButton: FC<NavButtonProps> = ({ children, icon, href }) => {
   return (
-    <MyButton
-      className="flex justify-start text-xl text-black dark:text-white"
-      icon={icon}
-    >
+    <MyButton className="flex justify-start text-xl" icon={icon}>
       <Link to={href}>{children}</Link>
     </MyButton>
   );

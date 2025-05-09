@@ -29,8 +29,10 @@ export const ThemeConextProvider: FC<ThemeConextProviderProps> = ({
   useEffect(() => {
     if (darkMode) {
       document.documentElement.setAttribute("data-theme", "dark");
+      document.body.className = "dark text-foreground bg-background";
     } else {
       document.documentElement.removeAttribute("data-theme");
+      document.body.className = "light text-foreground bg-background";
     }
   }, [darkMode]);
 
