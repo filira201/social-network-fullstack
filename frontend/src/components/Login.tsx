@@ -1,0 +1,77 @@
+import { useState, type FC } from "react";
+import { type AuthKeys, type LoginFiled } from "../lib";
+import { useForm } from "react-hook-form";
+import MyInput from "./MyInput";
+import { Button, Link } from "@heroui/react";
+import { useLazyCurrentQuery, useLoginMutation } from "../services/userApi";
+import { useNavigate } from "react-router";
+
+interface LoginProps {
+  setSelected: (value: AuthKeys) => void;
+}
+
+const Login: FC<LoginProps> = ({ setSelected }) => {
+  //TODO: Добавить zod, валидировать поля
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<LoginFiled>({
+    mode: "onChange",
+    reValidateMode: "onBlur",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const [login, { isLoading }] = useLoginMutation();
+  const navigate = useNavigate();
+  const [error, setError] = useState<string>("");
+  const [triggerCurrentCuery] = useLazyCurrentQuery();
+
+  const onSubmit = async (data: LoginFiled) => {
+    try {
+      await login(data).unwrap();
+    } catch (error) {}
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <MyInput
+        control={control}
+        name="email"
+        label="Email"
+        type="email"
+        required="Почта обязательна"
+      />
+
+      <MyInput
+        control={control}
+        name="password"
+        label="Пароль"
+        type="password"
+        required="Пароль обязателен"
+      />
+
+      <div className="flex gap-2 justify-end">
+        <Button fullWidth color="primary" type="submit" isLoading={isLoading}>
+          Войти
+        </Button>
+      </div>
+
+      <p className="text-center text-small">
+        Нет аккаунта?{" "}
+        <Link
+          size="sm"
+          className="cursor-pointer"
+          onPress={() => setSelected("sign-up")}
+        >
+          Зарегистрироваться
+        </Link>
+      </p>
+    </form>
+  );
+};
+
+export default Login;

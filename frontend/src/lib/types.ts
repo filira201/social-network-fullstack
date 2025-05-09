@@ -12,3 +12,10 @@ export type MyButtonColor =
   | "warning"
   | "danger"
   | undefined;
+
+export type AuthKeys = "login" | "sign-up";
+
+export type LoginFiled = {
+  email: string;
+  password: string;
+};
