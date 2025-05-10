@@ -1,41 +1,38 @@
-import { type FC } from "react";
-import { hasErrorField, type AuthKeys, type LoginFiled } from "../lib";
 import { useForm } from "react-hook-form";
 import MyInput from "./MyInput";
+import { hasErrorField, type AuthKeys, type RegisterFiled } from "../lib";
+import { type FC } from "react";
 import { Button, Link } from "@heroui/react";
-import { useLazyCurrentQuery, useLoginMutation } from "../services/userApi";
-import { useNavigate } from "react-router";
+import { useRegisterMutation } from "../services/userApi";
 import ErrorMessage from "./ErrorMessage";
 
-interface LoginProps {
+interface RegisterProps {
   setSelected: (value: AuthKeys) => void;
 }
 
-const Login: FC<LoginProps> = ({ setSelected }) => {
+const Register: FC<RegisterProps> = ({ setSelected }) => {
   //TODO: Добавить zod, валидировать поля
   const {
     handleSubmit,
     control,
     setError,
     formState: { errors },
-  } = useForm<LoginFiled>({
+  } = useForm<RegisterFiled>({
     mode: "onChange",
     reValidateMode: "onBlur",
     defaultValues: {
       email: "",
+      name: "",
       password: "",
     },
   });
 
-  const [login, { isLoading }] = useLoginMutation();
-  const navigate = useNavigate();
-  const [triggerCurrentCuery] = useLazyCurrentQuery();
+  const [register, { isLoading }] = useRegisterMutation();
 
-  const onSubmit = async (data: LoginFiled) => {
+  const onSubmit = async (data: RegisterFiled) => {
     try {
-      await login(data).unwrap();
-      await triggerCurrentCuery().unwrap();
-      navigate("/");
+      await register(data).unwrap();
+      setSelected("login");
     } catch (error) {
       if (hasErrorField(error)) {
         setError("root", {
@@ -48,9 +45,15 @@ const Login: FC<LoginProps> = ({ setSelected }) => {
       }
     }
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+      <MyInput
+        control={control}
+        name="name"
+        label="Имя"
+        type="text"
+        required="Имя обязательно"
+      />
       <MyInput
         control={control}
         name="email"
@@ -71,22 +74,22 @@ const Login: FC<LoginProps> = ({ setSelected }) => {
 
       <div className="flex gap-2 justify-end">
         <Button fullWidth color="primary" type="submit" isLoading={isLoading}>
-          Войти
+          Зарегистрироваться
         </Button>
       </div>
 
       <p className="text-center text-small">
-        Нет аккаунта?{" "}
+        Есть аккаунт?{" "}
         <Link
           size="sm"
           className="cursor-pointer"
-          onPress={() => setSelected("sign-up")}
+          onPress={() => setSelected("login")}
         >
-          Зарегистрироваться
+          Войти
         </Link>
       </p>
     </form>
   );
 };
 
-export default Login;
+export default Register;

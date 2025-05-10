@@ -6,13 +6,16 @@ import { Provider } from "react-redux";
 import { store } from "./store.ts";
 import { HeroUIProvider } from "@heroui/react";
 import { ThemeConextProvider } from "./contexts/theme/provider.tsx";
+import { AuthGuard } from "./components";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <HeroUIProvider>
         <ThemeConextProvider>
-          <App />
+          <AuthGuard>
+            <App />
+          </AuthGuard>
         </ThemeConextProvider>
       </HeroUIProvider>
     </Provider>

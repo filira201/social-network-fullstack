@@ -5,3 +5,6 @@ export { default as NavButton } from "./NavButton";
 export { default as MyButton } from "./MyButton";
 export { default as MyInput } from "./MyInput";
 export { default as Login } from "./Login";
+export { default as Register } from "./Register";
+export { default as ErrorMessage } from "./ErrorMessage";
+export { default as AuthGuard } from "./AuthGuard";
