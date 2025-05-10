@@ -9,3 +9,4 @@ export { default as Register } from "./Register";
 export { default as ErrorMessage } from "./ErrorMessage";
 export { default as AuthGuard } from "./AuthGuard";
 export { default as Profile } from "./Profile";
+export { default as CreatePost } from "./CreatePost";

@@ -26,6 +26,9 @@ export type RegisterFiled = {
   name: string;
   password: string;
 };
+export type CreatePostFiled = {
+  post: string;
+};
 
 export type UserState = {
   user: User | null;
