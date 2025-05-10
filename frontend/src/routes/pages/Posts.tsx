@@ -1,8 +1,8 @@
 import { CreatePost } from "../../components";
-import { useGetAllPostsQuery } from "../../services/postsApi";
+// import { useGetAllPostsQuery } from "../../services/postsApi";
 
 const Posts = () => {
-  const { data } = useGetAllPostsQuery();
+  // const { data } = useGetAllPostsQuery();
 
   return (
     <>

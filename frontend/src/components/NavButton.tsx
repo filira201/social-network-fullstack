@@ -1,6 +1,6 @@
 import type { FC, JSX, ReactNode } from "react";
 import MyButton from "./MyButton";
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 
 interface NavButtonProps {
   children: ReactNode;
@@ -11,7 +11,14 @@ interface NavButtonProps {
 const NavButton: FC<NavButtonProps> = ({ children, icon, href }) => {
   return (
     <MyButton className="flex justify-start text-xl" icon={icon}>
-      <Link to={href}>{children}</Link>
+      <NavLink
+        className={({ isActive }) =>
+          isActive ? "underline underline-offset-8" : ""
+        }
+        to={href}
+      >
+        {children}
+      </NavLink>
     </MyButton>
   );
 };
