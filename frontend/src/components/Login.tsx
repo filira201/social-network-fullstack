@@ -43,7 +43,7 @@ const Login: FC<LoginProps> = ({ setSelected }) => {
         });
       } else {
         setError("root", {
-          message: "Попробуйте ещё раз",
+          message: "Попробуйте позже",
         });
       }
     }

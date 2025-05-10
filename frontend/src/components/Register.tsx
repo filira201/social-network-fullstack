@@ -40,7 +40,7 @@ const Register: FC<RegisterProps> = ({ setSelected }) => {
         });
       } else {
         setError("root", {
-          message: "Попробуйте ещё раз",
+          message: "Попробуйте позже",
         });
       }
     }

@@ -1,4 +1,5 @@
 import {
+  Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -8,9 +9,22 @@ import {
 import { useGetTheme } from "../contexts/theme/useGetTheme";
 import { FaRegMoon } from "react-icons/fa";
 import { LuSunMedium } from "react-icons/lu";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { useNavigate } from "react-router";
+import { logout } from "../features/userSlice";
+import { CiLogout } from "react-icons/ci";
 
 const Header = () => {
   const { darkMode, toggleTheme } = useGetTheme();
+  const { isAuthenticated } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("token");
+    navigate("/auth");
+  };
 
   return (
     <Navbar>
@@ -26,7 +40,19 @@ const Header = () => {
           size="lg"
         ></Switch>
 
-        <NavbarItem></NavbarItem>
+        <NavbarItem>
+          {isAuthenticated && (
+            <Button
+              color="default"
+              variant="flat"
+              className="gap-2"
+              onPress={handleLogout}
+            >
+              <CiLogout />
+              <span>Выйти</span>
+            </Button>
+          )}
+        </NavbarItem>
       </NavbarContent>
     </Navbar>
   );

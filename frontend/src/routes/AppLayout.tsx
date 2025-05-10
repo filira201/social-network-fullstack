@@ -1,10 +1,10 @@
 import { Outlet, useNavigate } from "react-router";
-import { Container, Header, NavBar } from "../components";
+import { Container, Header, NavBar, Profile } from "../components";
 import { useAppSelector } from "../hooks";
 import { useEffect } from "react";
 
 const AppLayout = () => {
-  const { isAuthenticated } = useAppSelector((state) => state.user);
+  const { isAuthenticated, user } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,11 +17,14 @@ const AppLayout = () => {
     <>
       <Header />
       <Container>
-        <div className="p-4">
+        <div className="flex-1 p-4">
           <NavBar />
         </div>
-        <div className="flex-1 p-4">
+        <div className="flex-2 p-4">
           <Outlet />
+        </div>
+        <div className="flex-1 p-4">
+          <div className="flex flex-col gap-5">{!user && <Profile />}</div>
         </div>
       </Container>
     </>
