@@ -37,3 +37,5 @@ export type UserState = {
   current: User | null;
   token?: string;
 };
+
+export type CardFor = "comment" | "post" | "currentPost";
