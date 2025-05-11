@@ -41,20 +41,20 @@ const FollowController = {
   },
 
   unfollowUser: async (req, res) => {
-    const { followingId } = req.body;
+    const { id } = req.params;
     const userId = req.user.userId;
 
-    if (!followingId) {
+    if (!id) {
       return res.status(400).json({ error: "Все поля обязательны" });
     }
 
     try {
       const follows = await prisma.follows.findFirst({
-        where: { AND: [{ followerId: userId }, { followingId }] },
+        where: { AND: [{ followerId: userId }, { followingId: id }] },
       });
 
       if (!follows) {
-        res
+        return res
           .status(404)
           .json({ error: "Вы не подписаны на этого пользователя" });
       }
