@@ -26,8 +26,12 @@ export type RegisterFiled = {
   name: string;
   password: string;
 };
+
 export type CreatePostFiled = {
   post: string;
+};
+export type CreateCommentFiled = {
+  comment: string;
 };
 
 export type UserState = {

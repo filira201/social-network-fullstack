@@ -41,11 +41,11 @@ const MyCard: FC<MyCardProps> = ({
   name,
   authorId,
   content,
-  commentId,
+  commentId = "",
   likesCount = 0,
   commentsCount = 0,
   createdAt,
-  id,
+  id = "",
   cardFor = "post",
   likedByUser = false,
 }) => {
@@ -68,7 +68,7 @@ const MyCard: FC<MyCardProps> = ({
         await triggerGetAllPosts().unwrap();
         break;
       case "comment":
-        await triggerGetPostById(id as string).unwrap();
+        await triggerGetPostById(id).unwrap();
         break;
       default:
         throw new Error("Неверный аргумент cardFor");
@@ -78,12 +78,18 @@ const MyCard: FC<MyCardProps> = ({
   const handleLikeClick = async () => {
     try {
       if (likedByUser) {
-        await unlikePost(id as string).unwrap();
+        await unlikePost(id).unwrap();
       } else {
-        await likePost({ postId: id as string }).unwrap();
+        await likePost({ postId: id }).unwrap();
       }
 
-      await refetchPosts();
+      if (cardFor === "currentPost") {
+        await triggerGetPostById(id).unwrap();
+      }
+
+      if (cardFor === "post") {
+        await triggerGetAllPosts().unwrap();
+      }
     } catch (error) {
       if (hasErrorField(error)) {
         setError(error.data.error);
@@ -96,15 +102,15 @@ const MyCard: FC<MyCardProps> = ({
     try {
       switch (cardFor) {
         case "post":
-          await deletePost(id as string).unwrap();
+          await deletePost(id).unwrap();
           await refetchPosts();
           break;
         case "currentPost":
-          await deletePost(id as string).unwrap();
+          await deletePost(id).unwrap();
           navigate("/");
           break;
         case "comment":
-          await deleteComment(id as string).unwrap();
+          await deleteComment(commentId).unwrap();
           await refetchPosts();
           break;
         default:
