@@ -16,3 +16,5 @@ export { default as Typography } from "./Typography";
 export { default as MetaInfo } from "./MetaInfo";
 export { default as GoBack } from "./GoBack";
 export { default as CreateComment } from "./CreateComment";
+export { default as ProfileInfo } from "./ProfileInfo";
+export { default as CountInfo } from "./CountInfo";

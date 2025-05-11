@@ -29,12 +29,12 @@ const Login: FC<LoginProps> = ({ setSelected }) => {
 
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
-  const [triggerCurrentCuery] = useLazyCurrentQuery();
+  const [triggerCurrentQuery] = useLazyCurrentQuery();
 
   const onSubmit = async (data: LoginFiled) => {
     try {
       await login(data).unwrap();
-      await triggerCurrentCuery().unwrap();
+      await triggerCurrentQuery().unwrap();
       navigate("/");
     } catch (error) {
       if (hasErrorField(error)) {
