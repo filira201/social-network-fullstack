@@ -18,6 +18,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: pass
   react-app:
     build: ../frontend
-    porst:
+    ports:
       - "80:80"
 
