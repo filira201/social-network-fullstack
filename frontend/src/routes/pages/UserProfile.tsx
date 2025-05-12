@@ -10,10 +10,16 @@ import {
   useFollowUserMutation,
   useUnFollowUserMutation,
 } from "../../services/followsApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { resetUser } from "../../features/userSlice";
-import { CountInfo, GoBack, ProfileInfo } from "../../components";
-import { BASE_URL, formatToClientDate } from "../../lib";
+import {
+  CountInfo,
+  EditProfile,
+  ErrorMessage,
+  GoBack,
+  ProfileInfo,
+} from "../../components";
+import { BASE_URL, formatToClientDate, hasErrorField } from "../../lib";
 import {
   MdOutlinePersonAddAlt1,
   MdOutlinePersonAddDisabled,
@@ -30,6 +36,7 @@ const UserProfile = () => {
   const [triggerGetUserByIdQuery] = useLazyGetUserByIdQuery();
   const [triggerCurrentQuery] = useLazyCurrentQuery();
   const dispatch = useAppDispatch();
+  const [error, setError] = useState<string>("");
 
   useEffect(
     () => () => {
@@ -50,12 +57,34 @@ const UserProfile = () => {
         await triggerGetUserByIdQuery(id);
         await triggerCurrentQuery();
       }
-    } catch (error) {}
+    } catch (error) {
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      } else {
+        setError("Попробуйте позже");
+      }
+    }
   };
 
   if (!data) {
     return null;
   }
+
+  const handleClose = async () => {
+    try {
+      if (id) {
+        await triggerGetUserByIdQuery(id);
+        await triggerCurrentQuery();
+        onClose();
+      }
+    } catch (error) {
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      } else {
+        setError("Попробуйте позже");
+      }
+    }
+  };
 
   return (
     <>
@@ -88,7 +117,9 @@ const UserProfile = () => {
                 {data.isFollowing ? "Отписаться" : "Подписаться"}
               </Button>
             ) : (
-              <Button endContent={<CiEdit />}>Редактировать</Button>
+              <Button onPress={onOpen} endContent={<CiEdit />}>
+                Редактировать
+              </Button>
             )}
           </div>
         </Card>
@@ -107,6 +138,13 @@ const UserProfile = () => {
           </div>
         </Card>
       </div>
+      <EditProfile
+        handleClose={handleClose}
+        isOpen={isOpen}
+        onClose={onClose}
+        user={data}
+      />
+      <ErrorMessage error={error} />
     </>
   );
 };

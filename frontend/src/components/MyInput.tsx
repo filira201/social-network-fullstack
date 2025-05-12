@@ -15,6 +15,7 @@ interface MyInputProps<T extends FieldValues> {
   control: Control<T>;
   required?: string;
   endContent?: JSX.Element;
+  isRequired?: boolean;
 }
 
 const MyInput = <T extends FieldValues>({
@@ -25,6 +26,7 @@ const MyInput = <T extends FieldValues>({
   control,
   required = "",
   endContent,
+  isRequired = true,
 }: MyInputProps<T>) => {
   const {
     field,
@@ -43,7 +45,7 @@ const MyInput = <T extends FieldValues>({
       isInvalid={invalid}
       onChange={field.onChange}
       onBlur={field.onBlur}
-      isRequired
+      isRequired={isRequired}
       errorMessage={`${errors[name]?.message ?? ""}`}
       endContent={endContent}
     />
