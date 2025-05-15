@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { useEffect, type FC } from "react";
 import { hasErrorField, type AuthKeys, type LoginFiled } from "../lib";
 import { useForm } from "react-hook-form";
 import MyInput from "./MyInput";
@@ -6,6 +6,7 @@ import { Button, Link } from "@heroui/react";
 import { useLazyCurrentQuery, useLoginMutation } from "../services/userApi";
 import { useNavigate } from "react-router";
 import ErrorMessage from "./ErrorMessage";
+import { useAppSelector } from "../hooks";
 
 interface LoginProps {
   setSelected: (value: AuthKeys) => void;
@@ -27,9 +28,16 @@ const Login: FC<LoginProps> = ({ setSelected }) => {
     },
   });
 
+  const { isAuthenticated } = useAppSelector((state) => state.user);
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const [triggerCurrentQuery] = useLazyCurrentQuery();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   const onSubmit = async (data: LoginFiled) => {
     try {
