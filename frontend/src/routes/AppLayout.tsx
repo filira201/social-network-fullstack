@@ -17,19 +17,21 @@ const AppLayout = () => {
     <>
       <Header />
       <Container>
-        <div className="hidden p-4 lg:block">
+        <div className="hidden p-4 order-1 lg:block lg:order-1">
           <NavBar />
         </div>
-        <div className="flex-2 p-4">
-          <Outlet />
-        </div>
+
         {!user && (
-          <div className="flex-1 p-4">
-            <div className="flex flex-col gap-5">
+          <div className="p-4 order-1 w-full lg:order-3 md:flex-1 flex justify-center">
+            <div className="flex flex-col items-center gap-5">
               <Profile />
             </div>
           </div>
         )}
+
+        <div className="p-4 order-2 flex-2 lg:order-2">
+          <Outlet />
+        </div>
       </Container>
     </>
   );

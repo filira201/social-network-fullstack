@@ -99,7 +99,7 @@ const EditProfile: FC<EditProfileProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} placement="center">
       <ModalContent>
         {(onClose) => (
           <>

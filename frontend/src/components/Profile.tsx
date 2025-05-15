@@ -14,7 +14,7 @@ const Profile = () => {
   const { name, email, avatarUrl, id } = current;
 
   return (
-    <Card className="py-4 w-[302px]">
+    <Card className="py-4 w-[90%] sm:w-[302px]">
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-center">
         <Image
           src={`${BASE_URL}${avatarUrl}`}
