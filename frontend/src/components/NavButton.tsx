@@ -6,11 +6,21 @@ interface NavButtonProps {
   children: ReactNode;
   icon: JSX.Element;
   href: string;
+  handlePress?: () => void;
 }
 
-const NavButton: FC<NavButtonProps> = ({ children, icon, href }) => {
+const NavButton: FC<NavButtonProps> = ({
+  children,
+  icon,
+  href,
+  handlePress,
+}) => {
   return (
-    <MyButton className="flex justify-start text-xl" icon={icon}>
+    <MyButton
+      className="flex justify-start text-xl"
+      icon={icon}
+      handlePress={handlePress}
+    >
       <NavLink
         className={({ isActive }) =>
           isActive ? "underline underline-offset-8" : ""

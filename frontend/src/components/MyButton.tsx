@@ -9,6 +9,7 @@ interface MyBittonProps {
   type?: MyButtonType;
   fullWidth?: boolean;
   color?: MyButtonColor;
+  handlePress?: () => void;
 }
 
 const MyButton: FC<MyBittonProps> = ({
@@ -18,6 +19,7 @@ const MyButton: FC<MyBittonProps> = ({
   type,
   fullWidth,
   color,
+  handlePress,
 }) => {
   return (
     <Button
@@ -28,6 +30,7 @@ const MyButton: FC<MyBittonProps> = ({
       className={className}
       type={type}
       fullWidth={fullWidth}
+      onPress={handlePress}
     >
       {children}
     </Button>

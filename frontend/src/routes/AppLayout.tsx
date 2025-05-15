@@ -17,7 +17,7 @@ const AppLayout = () => {
     <>
       <Header />
       <Container>
-        <div className="p-4">
+        <div className="hidden p-4 lg:block">
           <NavBar />
         </div>
         <div className="flex-2 p-4">
