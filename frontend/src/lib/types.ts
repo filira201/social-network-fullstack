@@ -17,16 +17,6 @@ export type MyButtonColor =
 
 export type AuthKeys = "login" | "sign-up";
 
-export type LoginFiled = {
-  email: string;
-  password: string;
-};
-export type RegisterFiled = {
-  email: string;
-  name: string;
-  password: string;
-};
-
 export type CreatePostFiled = {
   post: string;
 };

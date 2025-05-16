@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 const App = () => {
-  //TODO: МБ добавить Toaster из "sonner" сюда или в AppLayout
+  //TODO: Обработка ошибок
   const routes = useMemo(() => routerBuilder(), []);
   return (
     <div className="main-wrapper">

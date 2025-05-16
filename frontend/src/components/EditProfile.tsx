@@ -39,8 +39,8 @@ const EditProfile: FC<EditProfileProps> = ({
     setError,
     formState: { errors },
   } = useForm<User>({
-    mode: "onChange",
-    reValidateMode: "onBlur",
+    mode: "onSubmit",
+    reValidateMode: "onChange",
     defaultValues: {
       email: user?.email ?? "",
       name: user?.name ?? "",

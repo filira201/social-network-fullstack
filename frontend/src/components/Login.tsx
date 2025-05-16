@@ -1,5 +1,10 @@
 import { useEffect, type FC } from "react";
-import { hasErrorField, type AuthKeys, type LoginFiled } from "../lib";
+import {
+  hasErrorField,
+  loginFormScheme,
+  type AuthKeys,
+  type LoginFormValues,
+} from "../lib";
 import { useForm } from "react-hook-form";
 import MyInput from "./MyInput";
 import { Button, Link } from "@heroui/react";
@@ -7,21 +12,22 @@ import { useLazyCurrentQuery, useLoginMutation } from "../services/userApi";
 import { useNavigate } from "react-router";
 import ErrorMessage from "./ErrorMessage";
 import { useAppSelector } from "../hooks";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface LoginProps {
   setSelected: (value: AuthKeys) => void;
 }
 
 const Login: FC<LoginProps> = ({ setSelected }) => {
-  //TODO: Добавить zod, валидировать поля
   const {
     handleSubmit,
     control,
     setError,
     formState: { errors },
-  } = useForm<LoginFiled>({
-    mode: "onChange",
-    reValidateMode: "onBlur",
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginFormScheme),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
     defaultValues: {
       email: "",
       password: "",
@@ -39,7 +45,7 @@ const Login: FC<LoginProps> = ({ setSelected }) => {
     }
   }, [isAuthenticated, navigate]);
 
-  const onSubmit = async (data: LoginFiled) => {
+  const onSubmit = async (data: LoginFormValues) => {
     try {
       await login(data).unwrap();
       await triggerCurrentQuery().unwrap();
@@ -59,20 +65,13 @@ const Login: FC<LoginProps> = ({ setSelected }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <MyInput
-        control={control}
-        name="email"
-        label="Email"
-        type="email"
-        required="Почта обязательна"
-      />
+      <MyInput control={control} name="email" label="Email" type="email" />
 
       <MyInput
         control={control}
         name="password"
         label="Пароль"
         type="password"
-        required="Пароль обязателен"
       />
 
       <ErrorMessage error={errors.root?.message} />

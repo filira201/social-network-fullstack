@@ -13,7 +13,6 @@ interface MyInputProps<T extends FieldValues> {
   placeholder?: string;
   type?: string;
   control: Control<T>;
-  required?: string;
   endContent?: JSX.Element;
   isRequired?: boolean;
 }
@@ -24,15 +23,13 @@ const MyInput = <T extends FieldValues>({
   placeholder,
   type,
   control,
-  required = "",
   endContent,
   isRequired = true,
 }: MyInputProps<T>) => {
   const {
     field,
-    fieldState: { invalid },
-    formState: { errors },
-  } = useController({ name, control, rules: { required } });
+    fieldState: { error },
+  } = useController({ name, control });
 
   return (
     <Input
@@ -42,11 +39,11 @@ const MyInput = <T extends FieldValues>({
       placeholder={placeholder}
       value={field.value}
       name={field.name}
-      isInvalid={invalid}
+      isInvalid={!!error}
       onChange={field.onChange}
       onBlur={field.onBlur}
       isRequired={isRequired}
-      errorMessage={`${errors[name]?.message ?? ""}`}
+      errorMessage={error?.message}
       endContent={endContent}
     />
   );

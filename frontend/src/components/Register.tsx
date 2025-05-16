@@ -1,25 +1,31 @@
 import { useForm } from "react-hook-form";
 import MyInput from "./MyInput";
-import { hasErrorField, type AuthKeys, type RegisterFiled } from "../lib";
+import {
+  hasErrorField,
+  registerFormScheme,
+  type AuthKeys,
+  type RegisterFormValues,
+} from "../lib";
 import { type FC } from "react";
 import { Button, Link } from "@heroui/react";
 import { useRegisterMutation } from "../services/userApi";
 import ErrorMessage from "./ErrorMessage";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface RegisterProps {
   setSelected: (value: AuthKeys) => void;
 }
 
 const Register: FC<RegisterProps> = ({ setSelected }) => {
-  //TODO: Добавить zod, валидировать поля
   const {
     handleSubmit,
     control,
     setError,
     formState: { errors },
-  } = useForm<RegisterFiled>({
-    mode: "onChange",
-    reValidateMode: "onBlur",
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerFormScheme),
+    mode: "onSubmit",
+    reValidateMode: "onChange",
     defaultValues: {
       email: "",
       name: "",
@@ -29,7 +35,7 @@ const Register: FC<RegisterProps> = ({ setSelected }) => {
 
   const [register, { isLoading }] = useRegisterMutation();
 
-  const onSubmit = async (data: RegisterFiled) => {
+  const onSubmit = async (data: RegisterFormValues) => {
     try {
       await register(data).unwrap();
       setSelected("login");
@@ -47,27 +53,14 @@ const Register: FC<RegisterProps> = ({ setSelected }) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <MyInput
-        control={control}
-        name="name"
-        label="Имя"
-        type="text"
-        required="Имя обязательно"
-      />
-      <MyInput
-        control={control}
-        name="email"
-        label="Email"
-        type="email"
-        required="Почта обязательна"
-      />
+      <MyInput control={control} name="name" label="Имя" type="text" />
+      <MyInput control={control} name="email" label="Email" type="email" />
 
       <MyInput
         control={control}
         name="password"
         label="Пароль"
         type="password"
-        required="Пароль обязателен"
       />
 
       <ErrorMessage error={errors.root?.message} />
