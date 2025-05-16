@@ -1,3 +1,4 @@
+import { ErrorBoundary } from "../components";
 import AppLayout from "./AppLayout";
 import {
   Auth,
@@ -36,10 +37,12 @@ const RouterBuilder = () => {
     {
       element: <AppLayout />,
       children: generalRoutes,
+      errorElement: <ErrorBoundary />,
     },
     {
       path: "/auth",
       element: <Auth />,
+      errorElement: <ErrorBoundary />,
     },
   ];
 

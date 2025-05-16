@@ -19,3 +19,4 @@ export { default as CreateComment } from "./CreateComment";
 export { default as ProfileInfo } from "./ProfileInfo";
 export { default as CountInfo } from "./CountInfo";
 export { default as EditProfile } from "./EditProfile";
+export { default as ErrorBoundary } from "./ErrorBoundary";
