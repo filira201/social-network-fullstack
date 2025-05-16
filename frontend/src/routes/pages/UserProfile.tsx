@@ -1,4 +1,4 @@
-import { Button, Card, Image, useDisclosure } from "@heroui/react";
+import { addToast, Button, Card, Image, useDisclosure } from "@heroui/react";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
@@ -76,6 +76,11 @@ const UserProfile = () => {
         await triggerGetUserByIdQuery(id);
         await triggerCurrentQuery();
         onClose();
+        addToast({
+          title: "Профиль",
+          description: "Вы обновили профиль",
+          color: "success",
+        });
       }
     } catch (error) {
       if (hasErrorField(error)) {

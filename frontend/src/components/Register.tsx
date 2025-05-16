@@ -7,7 +7,7 @@ import {
   type RegisterFormValues,
 } from "../lib";
 import { type FC } from "react";
-import { Button, Link } from "@heroui/react";
+import { addToast, Button, Link } from "@heroui/react";
 import { useRegisterMutation } from "../services/userApi";
 import ErrorMessage from "./ErrorMessage";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,6 +38,11 @@ const Register: FC<RegisterProps> = ({ setSelected }) => {
   const onSubmit = async (data: RegisterFormValues) => {
     try {
       await register(data).unwrap();
+      addToast({
+        title: "Регистрация",
+        description: "Вы успешно зарегистрировались",
+        color: "success",
+      });
       setSelected("login");
     } catch (error) {
       if (hasErrorField(error)) {
