@@ -30,7 +30,8 @@ http://localhost:80
 ```
 
 - Примечание:
-  Все переменные окружения указываются в .env файлах в корне frontend/, backend/ и на уровне docker-compose, при необходимости.
+  Все переменные окружения указываются в .env файлах в корне frontend/, backend/ и на уровне docker-compose, при необходимости. Переменные для backend:
+  PORT, DATABASE_URL, SECRET_KEY
 
 ## Цели и задачи проекта
 
